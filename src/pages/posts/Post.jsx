@@ -1,41 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { usePost } from "./queries";
 
 export default function Post() {
   const { id } = useParams();
+  const{ isLoading, isError, error, data } = usePost(id)
 
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  if (isLoading) return <h1>Loading...</h1>;
 
-  useEffect(() => {
-    fetchPosts(id);
-  }, [id]);
-
-  async function fetchPosts(postId) {
-    setLoading(true);
-    try {
-      const res = await fetch(`https://dummyjson.com/posts/${postId}`);
-      const data = await res.json();
-
-      if (data) {
-        setPost(data);
-      }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (loading || !post) return <h1>Loading...</h1>;
-
-  if (error) return <h2>Error - {error.toString()}</h2>;
+  if (isError) return <h2>Error - {error.toString()}</h2>;
 
   return (
     <div>
-      <h1>{post?.title}</h1>
-      <div>{post?.body}</div>
+      <h1>{data?.title}</h1>
+      <div>{data?.body}</div>
     </div>
   );
 }

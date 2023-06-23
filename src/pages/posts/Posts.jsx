@@ -1,39 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { usePosts } from "./queries";
+// import useFetch from "../../hooks/useFetch";
 
 export default function Posts() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const {data, loading, error} = useFetch("https://dummyjson.com/posts")
+  const {isLoading, isError, data, error} = usePosts()
+ 
+ 
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  if(isLoading || !data?.posts?.length) return <h1>Loading...</h1>
 
-  async function fetchPosts() {
-    setLoading(true);
-    try {
-      const res = await fetch("https://dummyjson.com/posts");
-      const data = await res.json();
-
-      if (data?.posts?.length) {
-        setPosts(data.posts);
-      }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if(loading) return <h1>Loading...</h1>
-
-  if (error) return <h2>Error - {error.toString()}</h2>;
+  if (isError) return <h2>Error - {error.toString()}</h2>;
 
   return (
     <div>
         <ul>
-          {posts.map((post) => (
+          {data.posts.map((post) => (
             <li>
               <Link to={`/posts/${post.id}`}>{post.title}</Link>
             </li>
