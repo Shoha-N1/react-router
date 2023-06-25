@@ -1,19 +1,12 @@
-import React, { Suspense } from "react";
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
-import { Outlet } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
-import queryClint from "./services/query";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
+import AuthorizedApp from "./components/auth/AuthorizedApp";
+import UnAuthorizedApp from "./components/auth/UnAuthorizedApp";
 
 function App() {
+  const { auth } = useContext(AuthContext);
   return (
-    <QueryClientProvider client={queryClint}>
-      <Header />
-      <Suspense fallback={<div>Loading...</div>}>
-        <Outlet />
-      </Suspense>
-      <Footer />
-    </QueryClientProvider>
+    auth.jwt ? <AuthorizedApp /> : <UnAuthorizedApp />
   );
 }
 

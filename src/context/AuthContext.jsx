@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
     jwt: null,
     user: null
 })
