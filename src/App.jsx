@@ -6,7 +6,7 @@ import UnAuthorizedApp from "./components/auth/UnAuthorizedApp";
 function App() {
   const { auth } = useContext(AuthContext);
   return (
-    auth.jwt ? <AuthorizedApp /> : <UnAuthorizedApp />
+    auth?.jwt ? <AuthorizedApp /> : <UnAuthorizedApp />
   );
 }
 

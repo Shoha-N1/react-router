@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavLink from "../nav-link/NavLink";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Header() {
+  const { logOut } = useContext(AuthContext);
   return (
     <div style={{ backgroundColor: "red" }}>
       <nav>
@@ -17,6 +19,9 @@ export default function Header() {
           </li>
           <li>
             <NavLink to={"/posts"}>Posts</NavLink>
+          </li>
+          <li>
+            <button onClick={() => logOut()}>Log Out</button>
           </li>
         </ul>
       </nav>

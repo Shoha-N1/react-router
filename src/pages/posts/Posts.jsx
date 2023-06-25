@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { usePosts } from "./queries";
-// import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 
 export default function Posts() {
-  // const {data, loading, error} = useFetch("https://dummyjson.com/posts")
-  const {isLoading, isError, data, error} = usePosts()
+  const {data, isLoading, isError, error} = useFetch("http://localhost:1337/api/newss")
+  // const {isLoading, isError, data, error} = usePosts()
  
  
 
@@ -16,9 +16,9 @@ export default function Posts() {
   return (
     <div>
         <ul>
-          {data.posts.map((post) => (
-            <li>
-              <Link to={`/posts/${post.id}`}>{post.title}</Link>
+          {data?.data?.map((post) => (
+            <li key={post.id}>
+              <Link to={`/posts/${post.id}`}>{post.attributes.title}</Link>
             </li>
           ))}
         </ul>

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 
 async function fetchPosts(){
-    return (await fetch("https://dummyjson.com/posts")).json()
+    return (await fetch("http://localhost:1337/api/newss")).json()
 }
 
 async function fetchPost({ queryKey }){
-    return (await fetch(`https://dummyjson.com/posts/${queryKey[1]}`)).json()
+    return (await fetch(`http://localhost:1337/api/newss/${queryKey[1]}`)).json()
 }
 
 export function usePosts(){
